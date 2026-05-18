@@ -38,3 +38,5 @@ cd library-app
 ```bash
 dotnet run
 ```
+
+*Сделано с ❤️ на C#*
