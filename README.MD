@@ -24,14 +24,17 @@
 dotnet --version
 git clone https://github.com/your-username/library-app.git
 cd library-app
+```
 
 ### 2. Скачайте репозиторий
 
 ```bash
 git clone https://github.com/your-username/library-app.git
 cd library-app
+```
 
 ### 3. Запустите приложение
 
 ```bash
 dotnet run
+```
