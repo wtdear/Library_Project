@@ -22,7 +22,7 @@
 
 ```bash
 dotnet --version
-git clone https://github.com/your-username/library-app.git
+git clone https://github.com/wtdear/Library_Project
 cd library-app
 ```
 
