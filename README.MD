@@ -29,7 +29,7 @@ cd library-app
 ### 2. Скачайте репозиторий
 
 ```bash
-git clone https://github.com/your-username/library-app.git
+git clone https://github.com/wtdear/library-app.git
 cd library-app
 ```
 
