@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,6 +64,7 @@ namespace Library_Project
             {
                 Id = BookRepository.NextId(list),
             };
+
             list.Add(newBook);
             _repository.SaveAll(list);
             _reloadBooks();
@@ -75,6 +76,7 @@ namespace Library_Project
             var idText = WpfInputHelper.Prompt(_owner, "Delete Book", "Book ID to delete:");
             if (idText == null)
                 return;
+
             if (!int.TryParse(idText.Trim(), out var id))
             {
                 MessageBox.Show(_owner, "Invalid ID format.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -89,10 +91,114 @@ namespace Library_Project
                 return;
             }
 
-            list.Remove(book);
+            if (book.IsTaken)
+            {
+                MessageBox.Show(_owner, $"Cannot delete \"{book.Title}\" - it's currently taken by {book.TakenBy}. Return the book first.",
+                    "Delete Book", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var confirm = MessageBox.Show(_owner, $"Delete \"{book.Title}\"?", "Confirm Delete",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirm == MessageBoxResult.Yes)
+            {
+                list.Remove(book);
+                _repository.SaveAll(list);
+                _reloadBooks();
+                MessageBox.Show(_owner, $"Book \"{book.Title}\" deleted.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        public void TakeBook()
+        {
+            var idText = WpfInputHelper.Prompt(_owner, "Take Book", "Book ID to take:");
+            if (idText == null)
+                return;
+
+            if (!int.TryParse(idText.Trim(), out var id))
+            {
+                MessageBox.Show(_owner, "Invalid ID format.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var list = _repository.LoadAll().ToList();
+            var book = list.FirstOrDefault(b => b.Id == id);
+            if (book == null)
+            {
+                MessageBox.Show(_owner, $"Book with ID {id} not found.", "Take Book", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (book.IsArchived)
+            {
+                MessageBox.Show(_owner, $"Book \"{book.Title}\" is archived and cannot be taken.", "Take Book",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (book.IsTaken)
+            {
+                MessageBox.Show(_owner, $"Book \"{book.Title}\" is already taken by {book.TakenBy}.", "Take Book",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var readerName = WpfInputHelper.Prompt(_owner, "Take Book", "Enter reader's name:");
+            if (string.IsNullOrWhiteSpace(readerName))
+            {
+                MessageBox.Show(_owner, "Reader name cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            book.IsTaken = true;
+            book.TakenBy = readerName.Trim();
+            book.TakenAt = DateTime.Now;
+
             _repository.SaveAll(list);
             _reloadBooks();
-            MessageBox.Show(_owner, $"Book \"{book.Title}\" deleted.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            MessageBox.Show(_owner, $"Book \"{book.Title}\" taken by {readerName.Trim()}.\nDate: {DateTime.Now:g}",
+                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void ReturnBook()
+        {
+            var idText = WpfInputHelper.Prompt(_owner, "Return Book", "Book ID to return:");
+            if (idText == null)
+                return;
+
+            if (!int.TryParse(idText.Trim(), out var id))
+            {
+                MessageBox.Show(_owner, "Invalid ID format.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var list = _repository.LoadAll().ToList();
+            var book = list.FirstOrDefault(b => b.Id == id);
+            if (book == null)
+            {
+                MessageBox.Show(_owner, $"Book with ID {id} not found.", "Return Book", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (!book.IsTaken)
+            {
+                MessageBox.Show(_owner, $"Book \"{book.Title}\" is not taken (it's available in the library).", "Return Book",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var readerName = book.TakenBy;
+            book.IsTaken = false;
+            book.TakenBy = null;
+            book.TakenAt = null;
+
+            _repository.SaveAll(list);
+            _reloadBooks();
+
+            MessageBox.Show(_owner, $"Book \"{book.Title}\" returned by {readerName}.",
+                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public void EditBook()
@@ -155,9 +261,43 @@ namespace Library_Project
 
             var sb = new StringBuilder("Book list:\n\n");
             foreach (var book in list.OrderBy(b => b.Id))
+            {
                 sb.AppendLine(book.ToLineSummary());
 
+                if (book.IsArchived)
+                    sb.AppendLine("Status: archived");
+                else if (book.IsTaken)
+                    sb.AppendLine($"Status: taken by {book.TakenBy} since {book.TakenAt:g}");
+                else
+                    sb.AppendLine("Status: available");
+
+                sb.AppendLine();
+            }
+
             MessageBox.Show(_owner, sb.ToString(), "Library Books", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public void ShowTakenBooks()
+        {
+            var list = _repository.LoadAll().ToList();
+            var takenBooks = list.Where(b => b.IsTaken && !b.IsArchived).ToList();
+
+            if (takenBooks.Count == 0)
+            {
+                MessageBox.Show(_owner, "No books are currently taken.", "Taken Books",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var sb = new StringBuilder("Taken books:\n\n");
+            foreach (var book in takenBooks.OrderBy(b => b.Id))
+            {
+                sb.AppendLine(book.ToLineSummary());
+                sb.AppendLine($"Taken by: {book.TakenBy}");
+                sb.AppendLine($"Taken at: {book.TakenAt:g}");
+                sb.AppendLine();
+            }
+
+            MessageBox.Show(_owner, sb.ToString(), "Taken Books", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -54,6 +54,15 @@ namespace Library_Project
         private void EditMenuItem_Click(object sender, RoutedEventArgs e) =>
             _libraryUi.EditBook();
 
+        private void TakeMenuItem_Click(object sender, RoutedEventArgs e) =>
+            _libraryUi.TakeBook();
+        private void ShowTakenMenuItem_Click(object sender, RoutedEventArgs e) =>
+            _libraryUi.ShowTakenBooks();
+
+        private void ReturnMenuItem_Click(object sender, RoutedEventArgs e) =>
+            _libraryUi.ReturnBook();
+
+
         private void AddBook_button(object sender, RoutedEventArgs e) =>
             _libraryUi.AddBook();
 
@@ -72,6 +81,11 @@ namespace Library_Project
         }
 
         private void Author_Click(object sender, RoutedEventArgs e) =>
-            MessageBox.Show("Devoloper - Johhny Kolbaya\nGroup - 106-Д9-2ИСП", "Author", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Devoloper - Johhny Kolbaya\nGroup - 106-Д9-2ИСП\nTask - Тема 1. Учёт книг (мини-библиотека)\nРеализуются добавление книги, просмотр всех книг, редактирование информации о книге, помещение книги в архив, загрузка списка книг из файла и сохранение изменённого списка в файл.\n", "Author", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // ignore
+        }
     }
 }

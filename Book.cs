@@ -11,12 +11,10 @@ namespace Library_Project
         public int Year { get; set; }
         public int Pages { get; set; }
 
-
-        /// <summary>
-        ///  <remarks> Добавить архивацию </remarks>
-        /// </summary>
         public bool IsArchived { get; set; } = false;
-        public DateTime? ArchivedAt { get; set; }
+        public bool IsTaken { get; set; } = false;
+        public string? TakenBy { get; set; } 
+        public DateTime? TakenAt { get; set; }
 
         public Book() { }
 

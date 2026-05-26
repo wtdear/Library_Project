@@ -162,6 +162,8 @@
                     <MenuItem Header="Add" Click="AddMenuItem_Click"/>
                     <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>
                     <MenuItem Header="Edit" Click="EditMenuItem_Click"/>
+                    <MenuItem Header="Take" Click="TakeMenuItem_Click"/>
+                    <MenuItem Header="Return" Click="ReturnMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Header="☰ About author" Click="Author_Click" Margin="12,0,0,0"/>
             </Menu>
@@ -179,7 +181,7 @@
                          Foreground="#2C4A5C"
                          FontFamily="Monocraft"
                          FontSize="11"
-                         BorderThickness="0">
+                         BorderThickness="0" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type local:Book}">
                             <TextBlock Text="{Binding Summary}" TextWrapping="Wrap"/>
@@ -187,14 +189,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Grid Grid.Column="1" Margin="68,85,35,23">
+                <Grid Grid.Column="1" Margin="68,85,0,23">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25*"/>
                         <RowDefinition Height="33*"/>
                         <RowDefinition Height="204*"/>
                     </Grid.RowDefinitions>
 
-                    <Button Margin="7,23,0,5" Click="ShowList_button"
+                    <Button Margin="7,9,0,19" Click="ShowList_button"
                             Height="30" 
                             HorizontalAlignment="Left" 
                             Width="132"
@@ -206,7 +208,7 @@
                             FontSize="18"
                             Foreground="#2C4A5C" Grid.RowSpan="2"/>
 
-                    <Button Margin="172,0,0,5" Click="AddBook_button"
+                    <Button Margin="172,0,0,19" Click="AddBook_button"
                             Height="30" 
                             VerticalAlignment="Bottom" 
                             HorizontalAlignment="Left" 
@@ -218,8 +220,8 @@
                             FontFamily="Monocraft"
                             FontSize="18"
                             Foreground="#2C4A5C" Grid.RowSpan="2"/>
-                    <Button Margin="166,26,0,181" Click="Delete_button"
-                        Height="30" 
+
+                    <Button Margin="172,22,0,188" Click="Delete_button" 
                         HorizontalAlignment="Left" 
                         Width="172"
                         Background="Transparent"
@@ -229,7 +231,8 @@
                         FontFamily="Monocraft"
                         FontSize="18"
                         Foreground="#2C4A5C" Grid.Row="1" Grid.RowSpan="2"/>
-                    <Button Margin="-13,28,0,179" Click="EditMenuItem_Click"
+
+                    <Button Margin="-13,22,0,185" Click="EditMenuItem_Click"
                         Height="30" 
                         HorizontalAlignment="Left" 
                         Width="172"
@@ -240,6 +243,42 @@
                         FontFamily="Monocraft"
                         FontSize="18"
                         Foreground="#2C4A5C" Grid.Row="1" Grid.RowSpan="2"/>
+
+                    <Button Margin="11,19,0,155" Click="TakeMenuItem_Click"
+                        Height="30" 
+                        HorizontalAlignment="Left" 
+                        Width="156"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Take book&#xA;"
+                        FontFamily="Monocraft"
+                        FontSize="18"
+                        Foreground="#2C4A5C" Grid.Row="2"/>
+
+                    <Button Margin="172,19,0,155" Click="ReturnMenuItem_Click"
+                        Height="30" 
+                        HorizontalAlignment="Left" 
+                        Width="160"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Return book&#xA;"
+                        FontFamily="Monocraft"
+                        FontSize="18"
+                        Foreground="#2C4A5C" Grid.Row="2"/>
+
+                    <Button Margin="66,49,0,125" Click="ShowTakenMenuItem_Click"
+                        Height="30" 
+                        HorizontalAlignment="Left" 
+                        Width="201"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Show taken book&#xA;"
+                        FontFamily="Monocraft"
+                        FontSize="18"
+                        Foreground="#2C4A5C" Grid.Row="2"/>
                 </Grid>
 
                 <TextBlock Text="Library Management System" 
