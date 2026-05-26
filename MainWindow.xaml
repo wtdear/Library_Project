@@ -187,7 +187,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Grid Grid.Column="1" Margin="68,85,59,23">
+                <Grid Grid.Column="1" Margin="68,85,35,23">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25*"/>
                         <RowDefinition Height="33*"/>
@@ -218,7 +218,7 @@
                             FontFamily="Monocraft"
                             FontSize="18"
                             Foreground="#2C4A5C" Grid.RowSpan="2"/>
-                    <Button Margin="71,0,0,174" Click="Delete_button"
+                    <Button Margin="166,26,0,181" Click="Delete_button"
                         Height="30" 
                         HorizontalAlignment="Left" 
                         Width="172"
@@ -228,7 +228,18 @@
                         Content="- Delete book"
                         FontFamily="Monocraft"
                         FontSize="18"
-                        Foreground="#2C4A5C" Grid.Row="2"/>
+                        Foreground="#2C4A5C" Grid.Row="1" Grid.RowSpan="2"/>
+                    <Button Margin="-13,28,0,179" Click="EditMenuItem_Click"
+                        Height="30" 
+                        HorizontalAlignment="Left" 
+                        Width="172"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="⚒️ Edit book&#xD;&#xA;"
+                        FontFamily="Monocraft"
+                        FontSize="18"
+                        Foreground="#2C4A5C" Grid.Row="1" Grid.RowSpan="2"/>
                 </Grid>
 
                 <TextBlock Text="Library Management System" 

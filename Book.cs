@@ -1,3 +1,5 @@
+using System;
+
 namespace Library_Project
 {
     /// <summary>Модель книги (только данные).</summary>
@@ -8,6 +10,13 @@ namespace Library_Project
         public string Author { get; set; } = string.Empty;
         public int Year { get; set; }
         public int Pages { get; set; }
+
+
+        /// <summary>
+        ///  <remarks> Добавить архивацию </remarks>
+        /// </summary>
+        public bool IsArchived { get; set; } = false;
+        public DateTime? ArchivedAt { get; set; }
 
         public Book() { }
 

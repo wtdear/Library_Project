@@ -70,9 +70,8 @@ namespace Library_Project
         {
             // ignore
         }
-        private void Author_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void Author_Click(object sender, RoutedEventArgs e) =>
             MessageBox.Show("Devoloper - Johhny Kolbaya\nGroup - 106-Д9-2ИСП", "Author", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
     }
 }
