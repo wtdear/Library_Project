@@ -21,7 +21,6 @@ namespace Library_Project
             var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             _filePath = Path.Combine(appDirectory, fileName ?? "Books.json");
 
-            // Диагностика в консоль (если есть консоль)
             Console.WriteLine($"[BookRepository] File path: {_filePath}");
             System.Diagnostics.Debug.WriteLine($"[BookRepository] File path: {_filePath}");
         }

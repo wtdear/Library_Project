@@ -25,9 +25,8 @@ namespace Library_Project
             Year = year;
             Pages = pages;
         }
-
         public string ToLineSummary() =>
-            $"ID: {Id} | {Title} | {Author} | {Year} | {Pages} стр.";
+            $"ID: {Id} | {Title} | {Author} | {Year} y. | {Pages} pg.\n{(IsTaken ? "Not Available" : "Available")}";
 
         /// <summary>Для привязки в списке.</summary>
         public string Summary => ToLineSummary();
