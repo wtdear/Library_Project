@@ -38,5 +38,7 @@ cd library-app
 ```bash
 dotnet run
 ```
+## ❓ Где находится .json файл?
+**Вы можете найти по пути: /bin/devug/net48/Books.json
 ---
 *Сделано с ❤️ на C#*
