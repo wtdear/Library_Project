@@ -18,7 +18,7 @@ namespace Library_Project
 
         public BookRepository(string? fileName = null)
         {
-            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var appDirectory = @"D:\\library\\Data\\appData";
             _filePath = Path.Combine(appDirectory, fileName ?? "Books.json");
 
             Console.WriteLine($"[BookRepository] File path: {_filePath}");

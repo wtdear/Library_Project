@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO.Compression;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
 
 namespace Library_Project
 {
@@ -86,6 +89,44 @@ namespace Library_Project
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // ignore
+        }
+        private void ToArchive_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string targetDirectory = @"D:\\library\\Data\\appData";
+                string sourceFilePath = Path.Combine(targetDirectory, "Books.json");
+                string zipPath = Path.Combine(targetDirectory, "Books.zip");
+
+                if (!File.Exists(sourceFilePath))
+                {
+                    MessageBox.Show("Файл Books.json не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (File.Exists(zipPath)) File.Delete(zipPath);
+
+                string arguments = $"-NoProfile -Command \"Compress-Archive -Path '{sourceFilePath}' -DestinationPath '{zipPath}' -Force\"";
+
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "powershell.exe",
+                    Arguments = arguments,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
+                };
+
+                using (System.Diagnostics.Process process = System.Diagnostics.Process.Start(startInfo))
+                {
+                    process?.WaitForExit();
+                }
+
+                MessageBox.Show("Архив успешно создан средствами Windows!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

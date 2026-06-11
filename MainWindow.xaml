@@ -165,7 +165,8 @@
                     <MenuItem Header="Take" Click="TakeMenuItem_Click"/>
                     <MenuItem Header="Return" Click="ReturnMenuItem_Click"/>
                 </MenuItem>
-                <MenuItem Header="☰ About author" Click="Author_Click" Margin="12,0,0,0"/>
+                <MenuItem Header="- About author" Click="Author_Click" Margin="12,0,0,0"/>
+                <MenuItem Header="- To archive" Click="ToArchive_Click"/>
             </Menu>
 
             <Grid>
