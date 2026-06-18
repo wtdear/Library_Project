@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "Title": "g21312",
+    "Author": "2321",
+    "Year": 31212,
+    "Pages": 12,
+    "IsArchived": false,
+    "IsTaken": false,
+    "TakenBy": null,
+    "TakenAt": null,
+    "Summary": "ID: 1 | g21312 | 2321 | 31212 y. | 12 pg.\nAvailable"
+  },
+  {
+    "Id": 2,
+    "Title": "Test book",
+    "Author": "Artorio",
+    "Year": 1999,
+    "Pages": 321,
+    "IsArchived": false,
+    "IsTaken": true,
+    "TakenBy": "Kolbaya",
+    "TakenAt": "2026-06-11T16:20:36.0792894+03:00",
+    "Summary": "ID: 2 | Test book | Artorio | 1999 y. | 321 pg.\nNot Available"
+  },
+  {
+    "Id": 3,
+    "Title": "new",
+    "Author": "test",
+    "Year": 22,
+    "Pages": 2,
+    "IsArchived": false,
+    "IsTaken": true,
+    "TakenBy": "123",
+    "TakenAt": "2026-06-18T19:09:33.8976772+03:00",
+    "Summary": "ID: 3 | new | test | 22 y. | 2 pg.\nNot Available"
+  }
+]
